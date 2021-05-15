@@ -36,10 +36,10 @@ class Dropbox:
         print (eskaera)
 
         # eskaeran "auth_code"-a bilatu
-        lehenengo_lerroa = eskaera.split('\n')[0]
+        lehenengo_lerroa = eskaera.decode("utf8").split('\n')[0]
         aux_auth_code = lehenengo_lerroa.split(' ')[1]
         auth_code = aux_auth_code[7:].split('&')[0]
-        print ("\tauth_code: " + auth_code)
+        print("\tauth_code: " + auth_code)
 
         # erabiltzaileari erantzun bat bueltatu
         http_response = "HTTP/1.1 200 OK\r\n\r\n" \
@@ -47,7 +47,7 @@ class Dropbox:
                         "<head><title>Proba</title></head>" \
                         "<body>The authentication flow has completed. Close this window.</body>" \
                         "</html>"
-        client_connection.sendall(http_response)
+        client_connection.sendall(http_response.encode(encoding="utf8"))
         client_connection.close()
         server_socket.close()
 
@@ -81,7 +81,7 @@ class Dropbox:
         print("\tCotenido:")
         print(contenido)
         contenido_json = json.loads(contenido)
-        access_token = contenido_json['access_token']
+        access_token =contenido_json['access_token']
         print("\taccess_token: " + access_token)
         self._access_token = access_token
 
